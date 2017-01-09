@@ -3,15 +3,15 @@
 var aws = require('aws-sdk');
 var polly = new aws.Polly({region: "us-east-1"});
 var streamifier = require('streamifier');
-var secrets = require('./secrets.json');
+var config = require('./config.json');
 var fs = require('fs');
-var voiceid='184987101735944193';
+var voiceid=config.voiceChannelId;
 
 
 
 var blah = require('discord.io');
 var discord3 = new blah.Client({
-	token: secrets['appsecret'],
+	token: config['appsecret'],
 	autorun: true
 });
 
@@ -25,7 +25,7 @@ discord3.on('ready', function() {
 				OutputFormat: 'mp3',
 				Text: message, 
 				 // | Ivy | Joanna | Joey | Justin | Kendra | Kimberly | Salli | Conchita | Enrique | Miguel | Penelope | Chantal | Celine | Mathieu | Dora | Karl | Carla | Giorgio | Mizuki | Liv | Lotte | Ruben | Ewa | Jacek | Jan | Maja | Ricardo | Vitoria | Cristiano | Ines | Carmen | Maxim | Tatyana | Astrid | Filiz', /* required */
-				 VoiceId: 'Justin',
+				 VoiceId: config.Voice,
 
 				 SampleRate: '8000',
 				 TextType: 'text'
@@ -35,7 +35,7 @@ discord3.on('ready', function() {
 
 				  if (err) console.log(err, err.stack); // an error occurred
 				  else     {
-				  	console.log(data);
+				  	console.log("Streaming message: ", message);
 				  	stream.write(data.AudioStream);
 				  	
 				  }
